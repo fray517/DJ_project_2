@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список фильмов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .add-link {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .add-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .films-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .film-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .film-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .film-title {
+            color: #333;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .film-section {
+            margin-bottom: 15px;
+        }
+
+        .section-label {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: block;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-content {
+            color: #555;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .empty-message {
+            background: white;
+            border-radius: 10px;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 1.2em;
+        }
+
+        .empty-message a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .empty-message a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Список фильмов</h1>
+
+        <a href="{% url 'add_film' %}" class="add-link">+ Добавить новый фильм</a>
+
+        {% if films %}
+            <div class="films-grid">
+                {% for film in films %}
+                    <div class="film-card">
+                        <h2 class="film-title">{{ film.title }}</h2>
+
+                        <div class="film-section">
+                            <span class="section-label">Описание:</span>
+                            <p class="section-content">{{ film.description }}</p>
+                        </div>
+
+                        <div class="film-section">
+                            <span class="section-label">Отзыв:</span>
+                            <p class="section-content">{{ film.review }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-message">
+                <p>Пока нет добавленных фильмов.</p>
+                <p><a href="{% url 'add_film' %}">Добавьте первый фильм</a></p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
